@@ -1,0 +1,31 @@
+== run 2026-11-02T15:13:52Z tag=baseline ==
+== clock/power pre ==
+    Performance State                                  : P0
+        GPU Current Temp                               : 77 C
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : 18.88 W
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : N/A
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : N/A
+    Max Clocks
+power_state: D0
+== run ==
+device: NVIDIA GeForce GTX 1650 (SM 7.5), 3707 MiB total
+rep 0: 859.326 ms for 100 iters
+rep 1: 927.070 ms for 100 iters
+rep 2: 965.968 ms for 100 iters
+rep 3: 964.361 ms for 100 iters
+rep 4: 1040.589 ms for 100 iters
+RESULT best_reps=5 best_ms=859.326 best_gflops=1999.23 mean_ms=951.463 mean_gflops=1805.63 checksum=2082.0000
+== clock/power post ==
+    Performance State                                  : P0
+        GPU Current Temp                               : 88 C
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : 33.07 W
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : N/A
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : N/A
+    Max Clocks
+power_state: D0

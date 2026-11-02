@@ -1,0 +1,33 @@
+== pre-reboot state 2026-11-02T15:39:40Z ==
+== grub env (one-shot armed) ==
+menu_auto_hide=1
+boot_success=1
+saved_entry=gnulinux-simple-708e5695-fe9a-4594-af51-8693ed856920
+next_entry=NVUNLOCK-RO
+
+== DPM override ==
+options nvidia NVreg_DynamicPowerManagement=0x00
+== grub.d entry ==
+-rwxr-xr-x 1 root root 1785  2. Nov 16:39 /etc/grub.d/42_nvunlock
+== ESP root ==
+booter_load_tu10x.bin
+EFI
+fwimage_tu10x.bin
+fwsignature_tu10x.bin
+gsp_boot_desc_tu10x.bin
+gsp_boot_tu10x.bin
+gsp-gate.txt
+i_know_what_i_am_doing.txt
+PROVENANCE.json
+sec2_bl_tu10x.bin
+SOURCE-MANIFEST.json
+tx-select-bdf.txt
+v67-tu10x-four-plm.bin
+== ESP EFI dirs ==
+/boot/efi/EFI/Manjaro
+/boot/efi/EFI/boot
+/boot/efi/EFI/NVUNLOCK-RO
+/boot/efi/EFI/NVUNLOCK-TX
+== chainback target hashes ==
+9b37d4524983bbe9575b753480b441f14b5796d786cccf500dbe4f7b7af3d16a  /boot/efi/EFI/Manjaro/grubx64.efi
+9b37d4524983bbe9575b753480b441f14b5796d786cccf500dbe4f7b7af3d16a  /boot/efi/EFI/boot/bootx64.efi
