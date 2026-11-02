@@ -1,0 +1,4 @@
+host: ja-manjaro ja-manjaro
+Linux ja-manjaro 6.12.108-1-MANJARO #1 SMP PREEMPT_DYNAMIC Sat, 05 Sep 2026 01:29:32 +0000 x86_64 GNU/Linux
+NAME="Manjaro Linux"
+PRETTY_NAME="Manjaro Linux"

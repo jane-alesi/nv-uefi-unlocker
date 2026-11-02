@@ -1,0 +1,2 @@
+9b37d4524983bbe9575b753480b441f14b5796d786cccf500dbe4f7b7af3d16a  /boot/efi/EFI/Manjaro/grubx64.efi
+9b37d4524983bbe9575b753480b441f14b5796d786cccf500dbe4f7b7af3d16a  /boot/efi/EFI/boot/bootx64.efi

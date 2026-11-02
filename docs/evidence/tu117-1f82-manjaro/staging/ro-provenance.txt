@@ -1,0 +1,13 @@
+-rw-r--r-- 1 ja ja  573  2. Nov 16:38 usbroot-ro/PROVENANCE.json
+-rw-r--r-- 1 ja ja 2882  2. Nov 16:38 usbroot-ro/SOURCE-MANIFEST.json
+{
+  "schema": "nvuu-provenance/1",
+  "generated_utc": "2026-11-02T15:38:07Z",
+  "source_manifest": "SOURCE-MANIFEST.json",
+  "source_manifest_sha256": "dc0ab619018b0b8b36715d81b21f381b7ce7e6f357f7a62d946155b7f17a3aa6",
+  "file_count": 18,
+  "total_bytes": 202374340,
+  "field_proven_efi_sha256": null,
+  "rebuild_declaration": "rebuilding this directory via release/make-usbroot.sh from the pinned public inputs must reproduce every sha256 in SOURCE-MANIFEST.json",
+  "note": "RO-stage build (maker --skip-gsp-check; GSP verified in OS before driver unbind: 580.178.04)"
+}
