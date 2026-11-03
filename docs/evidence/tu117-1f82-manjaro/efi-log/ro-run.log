@@ -1,0 +1,108 @@
+[    149ms] INFO : loader::logging: log file \loader.log opened on boot volume
+[    151ms] INFO : loader::logging: nv-uefi-unloader v2.1.9 (M0 skeleton: read-only)
+[    248ms] INFO : loader: WATCHDOG: disabled
+[    302ms] INFO : loader::banner: ==================================================
+[    303ms] INFO : loader::banner:  nv-uefi-unlocker v2.1.9 (built Mon 2026-11-02 16:32:57 +01:00)
+[    305ms] INFO : loader::banner:  read-only build: enumerate + sample + chain-load
+[    306ms] INFO : loader::banner:  console output only; no GPU writes by design
+[    307ms] INFO : loader::banner: ==================================================
+[    308ms] INFO : loader::banner: PHASE: CONFIRM
+[    362ms] INFO : loader: CONFIRM: \i_know_what_i_am_doing.txt present - ARMED: 10s countdown auto-runs, ANY key aborts
+[  10365ms] INFO : loader::keywait: CONFIRM: 10s armed countdown elapsed - PROCEED (marker file opted in)
+[  10367ms] INFO : loader::pci: PHASE: ENUMERATE (read-only)
+[  10411ms] INFO : loader::pci: ENUMERATE: 23 PciIo handles
+[  10412ms] INFO : loader::pci: PCI 0000:00:00.0 8086:3ec2 class 000600
+[  10413ms] INFO : loader::pci: PCI 0000:00:01.0 8086:1901 class 000604
+[  10414ms] INFO : loader::pci: PCI 0000:01:00.0 10de:1f82 class 000300
+[  10468ms] INFO : loader::pci: NVIDIA GPU? 0000:01:00.0 device 1f82
+[  10469ms] INFO : loader::pci:   BAR0 32-bit mem base 0xa2000000
+[  10470ms] INFO : loader::pci:   BAR1 64-bit mem base 0x0000000090000000
+[  10471ms] INFO : loader::pci:   BAR3 64-bit mem base 0x00000000a0000000
+[  10472ms] INFO : loader::pci:   BAR5 io base 0x5000
+[  10472ms] INFO : loader::pci:   cap 0x01 @0x60
+[  10473ms] INFO : loader::pci:   cap 0x05 @0x68
+[  10474ms] INFO : loader::pci:   PCIe cap @0x78: DEVCAP 0x112c8de1 (FLR yes) LINKCAP 0x00453d03
+[  10524ms] ERROR: loader::pci: cfg_read32(0x0100) status UNSUPPORTED
+[  10525ms] INFO : loader::pci: PCI 0000:01:00.1 10de:10fa class 000403
+[  10526ms] INFO : loader::pci: NVIDIA fn 0000:01:00.1 device 10fa
+[  10527ms] INFO : loader::pci:   BAR0 32-bit mem base 0xa3080000
+[  10528ms] INFO : loader::pci:   cap 0x01 @0x60
+[  10528ms] INFO : loader::pci:   cap 0x05 @0x68
+[  10529ms] INFO : loader::pci:   PCIe cap @0x78: DEVCAP 0x012c8de1 (FLR no) LINKCAP 0x00453d03
+[  10577ms] ERROR: loader::pci: cfg_read32(0x0100) status UNSUPPORTED
+[  10632ms] INFO : loader::pci: PCI 0000:00:12.0 8086:a379 class 001180
+[  10633ms] INFO : loader::pci: PCI 0000:00:14.0 8086:a36d class 000c03
+[  10634ms] INFO : loader::pci: PCI 0000:00:14.2 8086:a36f class 000500
+[  10635ms] INFO : loader::pci: PCI 0000:00:14.5 8086:a375 class 000805
+[  10636ms] INFO : loader::pci: PCI 0000:00:15.0 8086:a368 class 000c80
+[  10637ms] INFO : loader::pci: PCI 0000:00:15.1 8086:a369 class 000c80
+[  10638ms] INFO : loader::pci: PCI 0000:00:16.0 8086:a360 class 000780
+[  10639ms] INFO : loader::pci: PCI 0000:00:17.0 8086:a352 class 000106
+[  10674ms] INFO : loader::pci: PCI 0000:00:1c.0 8086:a33c class 000604
+[  10709ms] INFO : loader::pci: PCI 0000:02:00.0 10ec:8168 class 000200
+[  10745ms] INFO : loader::pci: PCI 0000:00:1c.5 8086:a33d class 000604
+[  10780ms] INFO : loader::pci: PCI 0000:03:00.0 10ec:c821 class 000280
+[  10815ms] INFO : loader::pci: PCI 0000:00:1d.0 8086:a330 class 000604
+[  10850ms] INFO : loader::pci: PCI 0000:04:00.0 144d:a809 class 000108
+[  10886ms] INFO : loader::pci: PCI 0000:00:1e.0 8086:a328 class 000780
+[  10921ms] INFO : loader::pci: PCI 0000:00:1f.0 8086:a304 class 000601
+[  11007ms] INFO : loader::pci: PCI 0000:00:1f.3 8086:a348 class 000403
+[  11042ms] INFO : loader::pci: PCI 0000:00:1f.4 8086:a323 class 000c05
+[  11077ms] INFO : loader::pci: PCI 0000:00:1f.5 8086:a324 class 000c80
+[  11112ms] INFO : loader::gop: PHASE: GOP-PROBE (read-only)
+[  11190ms] INFO : loader::gop: GOP-PROBE: 1 GOP handles
+[  11225ms] INFO : loader::gop: GOP handle Handle(0x87fe0218): 1920x1080 Bgr
+[  11261ms] INFO : loader::sample: PHASE: SAMPLE (M1 read-only cold state)
+[  11337ms] INFO : loader::sample: SAMPLE: GPU 10de:1f82 @ 0000:01:00.0
+[  11372ms] INFO : loader::sample: SAMPLE PMC_BOOT_0 chip-id = 0x167000a1 [ok]
+[  11407ms] INFO : loader::sample: SAMPLE FB_SIZE_MIB 0x1183a4 = 0xbadf5040 [PRIV_VIOLATION]
+[  11443ms] INFO : loader::sample: SAMPLE VGA_WORKSPACE 0x625f04 = 0x00020e09 [ok]
+[  11479ms] INFO : loader::sample: SAMPLE GFW_PLM 0x118128 = 0xffffff8f [ok]
+[  11514ms] INFO : loader::sample: SAMPLE GFW_SCRATCH 0x118234 = 0x000003ff [ok]
+[  11549ms] INFO : loader::sample: SAMPLE GSP_CPUCTL 0x110100 = 0x00000010 [ok]
+[  11585ms] INFO : loader::sample: SAMPLE PGC6_BSI_SCRATCH15 0x1180fc = 0x201001bf [ok]
+[  11620ms] INFO : loader::sample: SAMPLE MMU_PLM 0x1fa7c8 = 0xbadf5040 [PRIV_VIOLATION]
+[  11752ms] INFO : loader::sample: SAMPLE MMU_LOCK_LO 0x1fa82c = 0x00100000 [ok]
+[  11788ms] INFO : loader::sample: SAMPLE MMU_LOCK_HI 0x1fa830 = 0x00effff0 [ok]
+[  11823ms] INFO : loader::sample: SAMPLE WPR2_LO 0x1fa824 = 0x1ffffe00 [ok]
+[  11858ms] INFO : loader::sample: SAMPLE WPR2_HI 0x1fa828 = 0x00000000 [ok]
+[  11893ms] INFO : loader::sample: SAMPLE SEC2_CPUCTL 0x840100 = 0x00000010 [ok]
+[  11929ms] INFO : loader::sample: SAMPLE FUSE_OPT_FEAT_OVR_DISABLE 0x8203f0 = 0xbadf5040 [PRIV_VIOLATION]
+[  11965ms] INFO : loader::sample: SAMPLE FUSE_VER 0x824140 = 0xbadf5040 [PRIV_VIOLATION]
+[  12000ms] INFO : loader::sample: SAMPLE FUSE_VER_DECODE 0x8241c0 = 0xbadf5040 [PRIV_VIOLATION]
+[  12036ms] INFO : loader::sample: SAMPLE AD1xx CYA 0x88724 = 0x00000008 [ok]
+[  12071ms] INFO : loader::sample: SAMPLE AD1xx CFG 0x88dcc = 0x00000002 [ok]
+[  12106ms] INFO : loader::sample: SAMPLE AD1xx XVE_PLM 0x88ff4 = 0xbadf5040 [PRIV_VIOLATION]
+[  12142ms] INFO : loader::sample: SAMPLE AD1xx BAR1_CAP_MIRROR 0x88bbc = 0x00001c00 [ok]
+[  12177ms] INFO : loader::sample: SAMPLE ADA WPR_PLM 0x1fa7c4 = 0xbadf5040 [PRIV_VIOLATION]
+[  12213ms] INFO : loader::sample: SAMPLE ADA WPRCFG_PLM 0x1fa7cc = 0xbadf5040 [PRIV_VIOLATION]
+[  12248ms] INFO : loader::sample: SAMPLE ADA FBPA_PLM 0x9a0148 = 0xffffffcf [ok]
+[  12284ms] INFO : loader::sample: SAMPLE TU10x FEAT_PLM 0x409650 = 0xffffff8f [ok]
+[  12466ms] INFO : loader::sample: SAMPLE TU10x FEAT_SS0 0x409664 = 0x24264126 [ok]
+[  12501ms] INFO : loader::sample: SAMPLE TU10x FEAT_READOUT 0x409668 = 0x00000000 [ok]
+[  12537ms] INFO : loader::sample: SAMPLE XP3G PLM0 0x8e1b0 = 0xffffff8f [ok]
+[  12572ms] INFO : loader::sample: SAMPLE XP3G PLMC 0x8e1bc = 0xbadf5040 [PRIV_VIOLATION]
+[  12608ms] INFO : loader::sample: SAMPLE XP3G OVR0 0x8e110 = 0x00000000 [ok]
+[  12643ms] INFO : loader::sample: SAMPLE XP3G VAL0 0x8e120 = 0x00000000 [ok]
+[  12678ms] INFO : loader::sample: SAMPLE XVE LNKCAP 0x88084 = 0x00453d03 [ok]
+[  12713ms] INFO : loader::sample: SAMPLE XVE LNKCTL 0x88088 = 0x11010043 [ok]
+[  12749ms] INFO : loader::sample: SAMPLE XVE LNKCAP2 0x880a4 = 0x0000000e [ok]
+[  12784ms] INFO : loader::sample: SAMPLE XVE LNKCTL2 0x880a8 = 0x001f0003 [ok]
+[  12819ms] INFO : loader::sample: SAMPLE LNK MISC_1 0x8841c = 0x20340500 [ok]
+[  12855ms] INFO : loader::sample: SAMPLE LNK VSEC_HIER 0x88610 = 0x00001001 [ok]
+[  12890ms] INFO : loader::sample: SAMPLE LNK LTSSM_KICK 0x8872c = 0x00000000 [ok]
+[  12925ms] INFO : loader::sample: SAMPLE LNK LINK_CONFIG_0 0x8c040 = 0x800c5800 [ok]
+[  12961ms] INFO : loader::sample: SAMPLE LNK PL_LINK_RATE 0x8c1c0 = 0x00140036 [ok]
+[  12996ms] INFO : loader::sample: SAMPLE LNK CYA_DISG2 0x8c2c0 = 0x060711b3 [ok]
+[  13054ms] INFO : loader::sample: SAMPLE FEAT sweep 0x823800-0x82382f+0x823b00 (dword stride): 0 ok / 13 badf / 0 all-ones / 0 read-errors
+[  13124ms] INFO : loader::sample: SAMPLE FEAT cluster: NOT readable at PL0 on this chip (all badf) - recorded as the answer
+[  13160ms] INFO : loader::sample: SAMPLE FEAT_READOUT_1 = 0xbadf5040 (0 = no compute throttle active)
+[  13196ms] INFO : loader::sample: SAMPLE PSTRAPS SET0 0x101000 = 0x00400080 [ok] / SET1 0x10100c = 0x02013000 [ok]
+[  13231ms] INFO : loader::sample: SAMPLE PSTRAPS decode: BAR1 index 0 = 64MiB  BAR0 index 0 (16MiB<<idx)  BAR3=2xBAR0  override_en=0 (0 = ROM straps win on reset)
+[  13317ms] INFO : loader::sample: SAMPLE NV_PROM first 0x10000 bytes: crc32 0xf90b139d, magic 0xeb74aa55
+[  13353ms] INFO : loader::sample: SAMPLE complete (read-only, nothing restored because nothing touched)
+[  13431ms] INFO : loader::chainload: CHAIN-PRE: pre-transaction loader preload begin
+[  13512ms] INFO : loader::chainload: CHAIN-PRE: LoadImage '\EFI\Manjaro\grubx64.efi' (FromDevicePath)
+[  13597ms] INFO : loader::chainload: CHAIN-PRE: '\EFI\Manjaro\grubx64.efi' resident at 0x81e61000 (0x27000 bytes), PE header probe ok
+[  13713ms] INFO : loader::chainload: PHASE: CHAIN
+[  13795ms] INFO : loader::chainload: CHAIN-PRE: start-time PE header probe ok - StartImage the preloaded '\EFI\Manjaro\grubx64.efi'
