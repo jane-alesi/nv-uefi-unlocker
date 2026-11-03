@@ -95,7 +95,8 @@ First-report issue filed per docs/faq.en.md "How do I report an
 incompatibility or failure?" (full loader.log reference, GPU model/PCI ID,
 platform, driver, display mode, entry path, in-OS diagnosis):
 docs/evidence/tu117-1f82-manjaro/upstream-issue-1f82.md carries the exact
-body; the filed issue URL is recorded here once created.
+body. Filed 2026-11-03 as issue
+https://github.com/physicsdolphin/nv-uefi-unlocker/issues/151 .
 
 ## File inventory
 
