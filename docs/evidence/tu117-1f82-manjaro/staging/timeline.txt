@@ -1,1 +1,5 @@
 2026-11-02T15:42:57Z rebooting for NVUNLOCK-RO run
+2026-11-03T11:51:27Z rebooting for NVUNLOCK-TX run (transaction)
+2026-11-03T12:51:00Z tx run complete: Booter 0x31 (secure entry never executed), unlock=false, clean FLR + chainback
+2026-11-03T13:07:00Z post-bench (no gain, within variance; checksum identical), OS factory state verified
+2026-11-03T12:20:32Z final report + upstream issue body written; first-report filed; one-shot consumed; no reboot needed (valid no-gain class)
