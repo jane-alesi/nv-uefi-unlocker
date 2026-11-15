@@ -1,0 +1,15 @@
+eaff9eeb627468a981bd4935782d405ce550a5bcdc1a7262ac7b480cc93447cc  ./nvuu-stick.json
+1474aa70a64284bb0c1e84b1ff66063d80ae75f45a34edaa0331c4085fda3d7a  ./EFI/BOOT/BOOTX64.EFI
+1474aa70a64284bb0c1e84b1ff66063d80ae75f45a34edaa0331c4085fda3d7a  ./BOOTX64.EFI
+235fef5eb0357d43549b17b4bbff7bf2112f21c3aa7e86b79d650fb3489cb949  ./gsp-gate.txt
+de676bae28a480011d3d012db14bef539324e62a841a9627863c689bea168af3  ./gsp_boot_tu11x.bin
+c79208ac3b9e49cb590dadceb84e7032055fbdfad27788d8da7cb6964a005750  ./v67-tu11x-four-plm.bin
+c10c2866e360154e822087957bc4269168e44f8d45922110e67fd751355806f9  ./fwimage_tu11x.bin
+c94c6cb3e5fbcca06b12db6aaebacf1ca1dead2fb8aa66e21836d8a0340ab89e  ./fwsignature_tu11x.bin
+f21f1cfbb8fffa8067685314367fc4c50f3f84dd99eda7c19db4292d9269b9d9  ./sec2_bl_tu11x.bin
+9e7cca2cfdc5ce601b0adba39967850046108df6c2d23fff95578ca3f0ccbe01  ./gsp_boot_desc_tu11x.bin
+2e78e446825e344542f2286d571ef3e05d0cf5af22fa22facfac6a0220ccfdbc  ./booter_load_tu11x.bin
+# NOTE: this is the READ-ONLY builder output set (default `cargo build`);
+# the BOOTX64.EFI actually used for the transaction boot was rebuilt with
+# --features tx: sha256 0620d96cacd3f9580020fc3dd26ca1f7bb71dbfb88bf75922ec598aae14d3fb4 (523776 B).
+# ESP-side verification (byte-identical to the above) captured in the session, 2026-11-15.

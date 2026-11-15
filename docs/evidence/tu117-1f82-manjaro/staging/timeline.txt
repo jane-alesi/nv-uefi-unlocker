@@ -3,3 +3,6 @@
 2026-11-03T12:51:00Z tx run complete: Booter 0x31 (secure entry never executed), unlock=false, clean FLR + chainback
 2026-11-03T13:07:00Z post-bench (no gain, within variance; checksum identical), OS factory state verified
 2026-11-03T12:20:32Z final report + upstream issue body written; first-report filed; one-shot consumed; no reboot needed (valid no-gain class)
+2026-11-15T08:32:38+01:00 ARMED one-shot NVUNLOCK-TX: tu11x die-keyed stage (loader 2.1.12-rc3 sha1474aa70, booter_load_tu11x 2e78e446, payload c79208ac), countdown 10s, target 0000:01:00.0; ZERO-RETRY protocol; old tu10x stage files remain at ESP root but are inert for 1f82 (name-keyed lookup)
+2026-11-15T09:29:10+01:00 RO-misfire noted (default cargo build = RO by design, zero writes; one-shot consumed read-only). TX build 0620d96c (523776 B) ready; ESP root stage assets verified 2e78e446/c79208ac/de676bae. Guard blocks agent writes to EFI/** - owner runs the stage+arm block manually.
+2026-11-15T09:44:42+01:00 tmpfs loss noted: council run dir + reply-151 draft on /tmp wiped by reboot; council record reconstructed into docs/.../council-151/, posted reply recovered via API, asset hashes rebuilt from session capture. grub.cfg.pre-nvunlock.bak also lost (regenerable via grub-mkconfig)
