@@ -99,9 +99,13 @@ sudo nvidia-bug-report.sh --output-prefix gpu- >/dev/null 2>&1; ls gpu-*
 
 | Where | Look for | Pass shape |
 |---|---|---|
-| `loader.log` `POST-GOP` | `FEAT_PLM=` / `SS0=` / `SS1=` / `READOUT_1=` / `CANARY=` | `FEAT_PLM=0xffffffef` `SS0=0x88888888` `SS1=0x8` `READOUT_1=0x00000000` `CANARY=intact` |
+| `loader.log` `POST-GOP` | `FEAT_PLM=` / `SS0=` / `SS1=` / `READOUT_1=` / `CANARY=` | `SS0=0x88888888` `SS1=0x8` `READOUT_1=0x00000000` `CANARY=intact` with `FEAT_PLM=0xffffffef` **or** `0xffffff8f` - see the erratum below |
 | `loader.log` `HANDOFF-OUT` | `tu10x:unlock=` | `unlock=true` |
 | `kernel-boot.log` | `RmInitAdapter failed` | **absent**, GSP firmware version printed, `nvidia-smi` lists the card |
+
+**Erratum (upstream `3d2ff2f`, 2026-11-22, from #280):** the relock *write value* is factory `0xffffff8f`; `0xffffffef` is the post-write **readback** (bits 5:6 resist host clearing once the gate has been opened - TU106/TU104 silicon; TU102 22G once read `0x8f` with SS retained, board variance #74). So the loader may print `unlock NOT intact ... want plm=0xffffffef` when the readback is `0x8f` with SS retained - that line is **informational, not a failure**; the SS pair + `READOUT_1` are the verdict. If `READOUT_1` goes nonzero or SS washes, the unlock is gone (relock achieved factory) and the run's datum is "relock arm produces a factory-equivalent state on TU117".
+
+Negative-control note (#286): the only TU117 zero-write negative control is **agitate-only**; TU117 replay mode dies `mailbox0=0x0b` (signature domain) and must not be read as a control.
 
 Then the functional check (READOUT stays the only register verdict; autotune before trusting a GEMM number, per the unlocked-ada-gemm note upstream now references):
 
