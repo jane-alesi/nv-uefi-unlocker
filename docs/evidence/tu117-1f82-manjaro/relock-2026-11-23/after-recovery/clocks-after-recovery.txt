@@ -1,0 +1,5 @@
+clocks under load (nvidia-smi samples during bench run 1):
+t+4s:  1680 MHz, 58.05 W, 85 C, clocks_event_reasons.active 0x20 (idle flag only)
+t+7s:  1890 MHz, 24.90 W, 70 C, clocks_event_reasons.active 0x0
+after 3 runs: 1845 MHz, 88 C, fan 91 %, SW power cap / HW slowdown / thermal / power brake all Not Active; slowdown threshold 94 C
+factory reference (same script, 2026-11-15): BEST 1651.95 / MEAN 1602.99 and BEST 1653.05 / MEAN 1588.88 GFLOPS

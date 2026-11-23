@@ -1,5 +1,10 @@
 # RESUME - after the recovery reboot that follows the Boot 2 attempt (2026-11-23 ~17:10 CET)
 
+**DONE 17:15 CET - kept for the record.** Power-off 17:13:51, boot 17:14:23 (id
+`b9c6c45ed2b2451d945e129032a32de1`). Card back, driver initialized in 3.35 s, 0
+`RmInitAdapter` failures -> factory state. Outcome and evidence: `SUMMARY-relock-2026-11-23.md`
+("Recovery and outcome") and `after-recovery/`. The procedure below has been executed.
+
 ## What happened (facts)
 
 - Boot 1 (relock arm) done 16:26-16:42: loader green, OS refused - see `relock-2026-11-23/`.

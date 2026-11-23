@@ -139,6 +139,33 @@ Recovery: reboot (warm reset brings the slot back and reloads the stock modules 
 initramfs). Procedure after that boot: `RESUME-after-reboot-2026-11-23.md`. Rollback to
 factory from any unlocked state: power cycle (WoL available).
 
+## Recovery and outcome (power-off 17:13:51 -> boot 17:14:23, 4th S5 wake of the day)
+
+Owner chose power-off + WoL over a warm reboot. Pre-flight before the power-off is in
+`RESUME-after-reboot-2026-11-23.md` (GRUB one-shot consumed, BootOrder, kernel/initramfs
+untouched, stock modules resolve, 0 storage/MCE/thermal errors). Evidence: `after-recovery/`.
+
+| Check | Result |
+|---|---|
+| Card on the bus | yes - normal header, `Control: I/O+ Mem+ BusMaster+` (was `Unknown header type 7f`) |
+| Driver init | `NVRM: loading NVIDIA UNIX x86_64 Kernel Module 580.178.04` at 2.16 s -> **`[drm] Initialized nvidia-drm 0.0.0 for 0000:01:00.0 on minor 0` at 3.35 s**; `RmInitAdapter failed` count **0** |
+| Meaning | **factory state** - the driver that refuses the unlocked state initialized the card, so the D3cold/power event erased the unlock (the README's RTD3/D3cold note, now observed on TU117) |
+| Identity | VBIOS `90.17.27.00.22` unchanged, GSP firmware 580.178.04, P0 |
+| Boot timing | module load -> `Initialized nvidia-drm` within the same second; link up 5 s after kernel start (69 s on the refused boot) |
+| Kernel | 0 BUG/WARNING lines; clean taint |
+| Services | no failed units at 1 min; `nvidia-cdi-refresh` succeeded once (`NRestarts=0`) - no storm |
+| Load | 1680 -> 1890 MHz under GEMM, no throttle reasons active; after 3 runs 88 C, fan 91 %, all slowdown flags Not Active (threshold 94 C) |
+| Bench (same committed script) | BEST 1774.84 / 1762.06 / 1706.37 GFLOPS, MEAN 1742.12 / 1711.82 / 1650.46, checksum identical to the factory reference (`mean=0.0001 max=19.1624`). 3-7 % above the 11-15 factory reference (1651.95 / 1653.05), spread tracks temperature - factory-normal |
+
+The machine is back in its verified factory state: healthy driver, full boost, display
+back. Nothing at the package, initramfs or GRUB level was changed at any point today.
+
+Leftovers from the Boot 2 attempt (all inert; owner's call): firmware pair under
+`/usr/lib/firmware/nvidia/580.142/` (the stock module looks in `580.178.04/`), the build
+tree `~/nvunlock/nv-580.142-src/`, and on the ESP the tu11x stage plus the three markers
+(`tx-relock.txt`, `tx-select-bdf.txt`, `i_know_what_i_am_doing.txt`) - live only if the
+`NVUNLOCK-TX` GRUB entry is selected.
+
 ## Rules added by this attempt
 
 - No runtime `rmmod` of the nvidia stack on this box for experiments.

@@ -1,0 +1,19 @@
+# boot b9c6c45ed2b2451d945e129032a32de1, kernel start 17:14:23 CET, after S5 power-off (17:13:51) + WoL wake
+[    0.176083] fbcon: Taking over console
+[    0.509629] pci 0000:01:00.0: vgaarb: setting as boot VGA device
+[    0.509629] pci 0000:01:00.0: vgaarb: bridge control possible
+[    0.509629] pci 0000:01:00.0: vgaarb: VGA device added: decodes=io+mem,owns=io+mem,locks=none
+[    0.509629] vgaarb: loaded
+[    2.118786] nvidia 0000:01:00.0: vgaarb: VGA decodes changed: olddecodes=io+mem,decodes=none:owns=io+mem
+[    2.159572] NVRM: loading NVIDIA UNIX x86_64 Kernel Module  580.178.04  Tue Jul  7 12:38:21 UTC 2026
+[    2.203252] [drm] [nvidia-drm] [GPU ID 0x00000100] Loading driver
+[    3.349840] [drm] Initialized nvidia-drm 0.0.0 for 0000:01:00.0 on minor 0
+[    3.349929] nvidia 0000:01:00.0: vgaarb: deactivate vga console
+[    3.400325] fbcon: nvidia-drmdrmfb (fb0) is primary device
+[    3.488209] nvidia 0000:01:00.0: [drm] fb0: nvidia-drmdrmfb frame buffer device
+RmInitAdapter failures this boot: 0
+kernel BUG/WARNING lines this boot: 0
+module load -> nvidia-drm initialized -> link up (journal wallclock):
+17:14:23 NVRM: loading NVIDIA UNIX x86_64 Kernel Module  58
+17:14:23 [drm] Initialized nvidia-drm 0.0.0 for 0000:01:00.
+17:14:28 r8169 0000:02:00.0 enp2s0: Link is Up - 1Gbps/Full
