@@ -137,6 +137,13 @@ etherwake "$(grep -oE '([0-9a-f]{2}:){5}[0-9a-f]{2}' /etc/systemd/network/99-enp
 
 Until that test passes, every S5/PSU event on this box counts as hands-required.
 
+## 2026-11-23 amendment (pre-visit prep, superscedes Step 4's manual capture)
+
+- **Capture is scripted**: owner runs `bash ~/capture-relock.sh` after the chainback - it copies `loader.log`, dumps the full boot journal (`-o short-monotonic`), `nvidia-smi`, and the register readback twice: with the driver loaded (known EINVAL, kept for the record) and after `rmmod` of the nvidia stack (the module holds BAR0 exclusively; unloaded, `tools/diag-unlock.py --bdf 0000:01:00.0` can mmap `resource0`). That second readback is upstream's "init refuses vs init scrubs" discriminator (their #246 reply 2026-11-23).
+- **Persistent journal is armed pre-boot**: `sudo mkdir -p /var/log/journal && sudo systemctl restart systemd-journald` (one-time, Step 1 block below includes it).
+- **Boot 2 staged** (conditional, only if Boot 1 fails): `~/nvunlock/NVIDIA-Linux-x86_64-580.142.run` (sha256 `20915fcf3ffe89c3550cf93b...`, HTTP 200 from NVIDIA, the exact #103 driver). Sequence on failure: remove the pacman nvidia packages (`sudo pacman -R nvidia-580xx-settings nvidia-580xx-utils lib32-nvidia-580xx-utils linux612-nvidia-580xx` - drop `lib32-` if absent), run the `.run` installer (headers 6.12.112 are installed; no dkms needed, the .run builds its own module), **warm reboot** (unlock survives warm reboot, proven 11-15; relock flag stays on the ESP), re-run the capture script, then power off. Revert afterwards = power cycle + reinstall the pacman packages (listed in Step 6's closure).
+- Upstream expectation for Boot 1 is now negative-leaning (#280 ran the same relock shape on Windows 621.14 GSP and got Code 43) - **both outcomes are decisive** and GO for Boot 1 was re-confirmed by upstream on #246 (2026-11-23 13:13Z): "the relock boot is still the top ask from this box".
+
 ## Cleanup after the outcome is published
 
 Per the removal table in `REPORT.md`: the tu11x stage + `*.txt` markers come off the ESP once upstream has consumed the data point (keep `loader.log` and the capture dir in the evidence branch).
