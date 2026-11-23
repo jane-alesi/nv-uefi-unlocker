@@ -17,7 +17,34 @@
   Do not describe the 580.142 module as the cause - it never got past the PCI probe.
 - Evidence: `relock-2026-11-23/boot2-attempt/dmesg-17-05-redacted.log`.
 
-## Why a reboot
+## Recovery path chosen by the owner: POWER OFF + WoL (scheduled ~17:20 CET)
+
+Previous boot id (to distinguish the next one): `9c1eb8e346324769ac19cbb421e0d6af`
+(kernel start 16:26:56 CET). The next boot must carry a different id.
+
+Pre-flight done before scheduling the power-off (all read-only unless noted):
+
+| Check | Result |
+|---|---|
+| GRUB environment | `next_entry=` empty (one-shot consumed), `saved_entry=gnulinux-simple-708e5695…` = Manjaro |
+| Firmware | `BootOrder: 0000,0002,…` = Manjaro GRUB first, no `BootNext`. `Boot0002 UEFI OS -> \EFI\BOOT\BOOTX64.EFI` exists in the 11-03 pre-staging baseline and is not in our inventory; not readable by the agent (guard) - identity by records only |
+| NIC | `Wake-on: g`, link up; three S5 wakes worked today |
+| Kernel / initramfs | `vmlinuz` + `initramfs-6.12-x86_64.img` mtime 2026-11-10 11:44, same image that booted 4x today |
+| Stock driver on disk | 5 modules in `extramodules/`; `modprobe -n -v` dry run resolves them with the usual modprobe.d options; depmod indexes dated 11-10 |
+| Packages today | chromium only - no kernel, nvidia, grub, mkinitcpio |
+| `pacman -Qkk` "altered" | benign: depmod index files in `linux612`, config files in `grub` (owner customisations) |
+| Kernel health | 0 storage / memory / MCE / thermal errors; only the nvidia events |
+| Services | degraded only by: 2 `luca-*-startup` (pre-existing), `nvidia-cdi-refresh` (stopped by the agent) |
+| Extra probes 17:02:10-13 | trigger = `agent-zero` container restart (containerd shim at 17:02:09) -> container toolkit `nvidia-modprobe`; one burst, not a loop |
+| Timers | none before the power-off; daily `luca-maintenance-reboot` at 05:55, `logrotate` 00:16 |
+| Disk | 170 G free |
+| ESP markers | `tx-relock.txt`, `tx-select-bdf.txt`, `i_know_what_i_am_doing.txt` still present - inert unless the `NVUNLOCK-TX` GRUB entry is selected |
+
+Unknowns stated as such: whether the card returns from POST (inference: config space
+all-ones + link down = powered down, not hung; a full S5->S0 cycle re-initialises the
+slot), and whether the unlock was erased (expected if the card lost power).
+
+## Why a reboot (written for the warm-reboot option; the owner chose power-off + WoL)
 
 Card unresponsive on the bus + tainted kernel + no GPU driver. A warm reboot asserts
 reset to the slot and reloads the stock 580.178.04 modules from the initramfs.
