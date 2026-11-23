@@ -144,6 +144,19 @@ Until that test passes, every S5/PSU event on this box counts as hands-required.
 - **Boot 2 staged** (conditional, only if Boot 1 fails): `~/nvunlock/NVIDIA-Linux-x86_64-580.142.run` (sha256 `20915fcf3ffe89c3550cf93b...`, HTTP 200 from NVIDIA, the exact #103 driver). Sequence on failure: remove the pacman nvidia packages (`sudo pacman -R nvidia-580xx-settings nvidia-580xx-utils lib32-nvidia-580xx-utils linux612-nvidia-580xx` - drop `lib32-` if absent), run the `.run` installer (headers 6.12.112 are installed; no dkms needed, the .run builds its own module), **warm reboot** (unlock survives warm reboot, proven 11-15; relock flag stays on the ESP), re-run the capture script, then power off. Revert afterwards = power cycle + reinstall the pacman packages (listed in Step 6's closure).
 - Upstream expectation for Boot 1 is now negative-leaning (#280 ran the same relock shape on Windows 621.14 GSP and got Code 43) - **both outcomes are decisive** and GO for Boot 1 was re-confirmed by upstream on #246 (2026-11-23 13:13Z): "the relock boot is still the top ask from this box".
 
+## Field amendment 2026-11-23 - owner-block rules (from a near-miss)
+
+**What happened:** stage copy verified (8/8 `sudo cmp` OK), then the marker line `cd /boot/efi && echo .. | sudo tee tx-select-bdf.txt && sudo touch ..` printed `zoxide: no match found` - the zoxide-wrapped `cd` could not resolve the ESP unprivileged, the `&&` chain stopped, and **the marker writes never ran**. The next line (`ls -la /boot/efi/*.txt` as user) also failed (`Permission denied`), so the marker state was unobserved - while `sudo grub-reboot` had already set `next_entry=NVUNLOCK-TX`. A boot in that state would have re-run the gate-open arm (the known-fail configuration from 11-15) and spent the single cold boot on the wrong variable. Caught by reading the pasted output, not by a tool.
+
+Two false alarms in the same minutes, both verification-channel errors: `cp -a` "failed to preserve ownership" (vfat cannot store uid/gid - bytes copied), and 8/8 `DIFF` from `cmp -s` run unprivileged (`-s` hid `Permission denied`; the uniform failure was the tell).
+
+**Rules for every owner block from here:**
+1. No `cd <path> &&` chains - absolute paths only. A failed `cd` silently skips the writes.
+2. Verify privileged, with the reason visible: `sudo cmp` without `-s`; list with root-side globbing `sudo sh -c 'ls -la /boot/efi/*.txt'` (the user shell cannot expand a glob inside the ESP).
+3. A uniform all-OK or all-FAIL is a channel signal until one case is explained without `-s`/`-q`.
+4. `tx-select-bdf.txt` must contain the address (`dddd:bb:dd.f`); a zero-byte file makes the loader refuse-to-guess and skip TX. `tx-relock.txt` and `i_know_what_i_am_doing.txt` are presence-only (empty is correct; empty `i_know` = 5 s auto-run).
+5. Arm the one-shot **last**, only after the markers are observed on the ESP.
+
 ## Cleanup after the outcome is published
 
 Per the removal table in `REPORT.md`: the tu11x stage + `*.txt` markers come off the ESP once upstream has consumed the data point (keep `loader.log` and the capture dir in the evidence branch).
