@@ -101,9 +101,47 @@ failed and the `&&` chain skipped the marker writes while the GRUB one-shot was 
 armed. A boot then would have re-run the gate-open arm. Caught from the pasted output.
 Rules: `RUNBOOK-relock-2026-11-19.md` field amendment.
 
-## Next (owner decision)
+## Boot 2 attempt (runtime swap to 580.142, 17:01) - DID NOT RUN
 
-Boot 2 per upstream's tree: keep the relock flag, swap driver+GSP to 580.142 (= #103's
-passing cell). Not run - the swap touches the working driver stack while the owner is
-remote; it needs an explicit confirm. Rollback from today's state: power cycle (WoL now
-available) = factory derivation, healthy driver.
+Owner GO given; design revised from "package swap + reboot" to a runtime `rmmod`/`insmod`
+after finding that the initramfs embeds the stock modules (a reboot would have loaded the
+old 580.178.04 first). Pre-checks were green: 580.142 modules built against 6.12.112 with
+gcc 16.2 (`exit=0`, vermagic exact), all needed module parameters present, GSP firmware
+installed by the owner and hash-verified.
+
+| Time | Event |
+|---|---|
+| 17:01:58 | `rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia` (580.178.04) - returns 0, logs `BUG nvidia_stack_cache: Objects remaining on __kmem_cache_shutdown()` |
+| 17:01:59 | `insmod nvidia.ko` (580.142) -> `No such device`; kernel: `nvidia 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible`, probe failed |
+| 17:02:10-13 | five further probes (distro `modprobe`, trigger not identified) - identical |
+| 17:04-17:05 | `lspci -vv -s 01:00.0`: `Unknown header type 7f` (config space all-ones, 5 reads); root port `LnkSta: Speed 2.5GT/s, Width x16` without link-active; display black, SSH fine |
+
+**The 580.142 module was never evaluated** - the card was already unreachable at its PCI
+probe, one second after the unload. **Cause of the D3cold not established.** The first
+unload this boot (16:32:40, capture script) was followed by a successful reload within a
+second, so "unload drops the card" is not a rule; this unload differed in prior idle time
+(30 min) and in what probed next.
+
+Other findings from the attempt:
+- Unloading the 580.178.04 module on the failed-init state is **unclean both times**
+  (16:32:40 and 17:01:58): `BUG nvidia_stack_cache: Objects remaining on
+  __kmem_cache_shutdown()` - six BUG reports on the second unload, twelve matching lines in
+  the journal for the first - kernel WARN, taint `W`/`B`. `rmmod` still returns 0, so the
+  capture script's log had carried the first one unnoticed.
+- Capture bug again in my own tooling: slicing `dmesg` by baseline line number returned an
+  empty file because the ring wrapped (the RmInitAdapter storm keeps it wrapping). Use
+  timestamps.
+- Nothing was removed or installed at the package level; the pacman module package and the
+  initramfs are untouched. Added by this attempt only: the owner's two firmware files under
+  `/usr/lib/firmware/nvidia/580.142/` and the build tree in `~/nvunlock/`.
+
+Recovery: reboot (warm reset brings the slot back and reloads the stock modules from the
+initramfs). Procedure after that boot: `RESUME-after-reboot-2026-11-23.md`. Rollback to
+factory from any unlocked state: power cycle (WoL available).
+
+## Rules added by this attempt
+
+- No runtime `rmmod` of the nvidia stack on this box for experiments.
+- A real Boot 2 needs the stock modules to never load (one-shot GRUB entry with
+  `modprobe.blacklist=`, then `insmod` 580.142) - to be designed with the owner and, given
+  today, ideally on-site.

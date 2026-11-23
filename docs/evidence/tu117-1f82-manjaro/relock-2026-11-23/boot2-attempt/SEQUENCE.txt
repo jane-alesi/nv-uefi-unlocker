@@ -1,0 +1,10 @@
+# Boot 2 attempt - exact command sequence (2026-11-23 17:01:58-17:01:59)
+cd ~/nvunlock/nv-580.142-src/kernel
+sudo rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia            # exit 0; kernel BUG nvidia_stack_cache
+sudo insmod nvidia.ko NVreg_UsePageAttributeTable=1 NVreg_EnablePCIeGen3=1 NVreg_DynamicPowerManagement=0x00 NVreg_TemporaryFilePath=/var/tmp 'NVreg_RegistryDwords=PowerMizerEnable=0x1; PerfLevelSrc=0x2222; PowerMizerDefault=0x1'
+   -> insmod: ERROR: could not insert module nvidia.ko: No such device   (probe: D3cold -> D0, device inaccessible)
+sudo insmod nvidia-modeset.ko   -> Unknown symbol (dependency absent)
+sudo insmod nvidia-drm.ko modeset=1 fbdev=1   -> Unknown symbol (Dependency absent); the init attempt never ran
+pre-checks: build exit 0; modinfo version 580.142, vermagic 6.12.112-1-MANJARO; firmware installed by owner
+gsp_tu10x.bin sha256 9f5494c15eb83f2b3faf08e93f29fa33fbd3814170506bb6596e10ffca439ce5
+gsp_ga10x.bin sha256 a6b8d5d2f66963f22b03ee0b386dcbf8882bd5d0b3a070de32f7b9a9f8650f05
