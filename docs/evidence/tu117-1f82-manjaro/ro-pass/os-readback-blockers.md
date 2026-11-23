@@ -1,5 +1,13 @@
 # In-OS register readback blockers on ja-manjaro (2026-11-02)
 
+> **CORRECTION 2026-11-23** - section 1's root cause was imprecise. `/usr/src/linux612` is
+> headers-only (no `.c` files), so the "verified in source" claim did not hold. Checked
+> against upstream v6.12: the sysfs mmap refuses **any driver-claimed BAR** on a kernel with
+> `CONFIG_IO_STRICT_DEVMEM` (`resource_is_exclusive()` = `strict_iomem_checks` AND
+> `IORESOURCE_BUSY` AND (IO_STRICT_DEVMEM OR EXCLUSIVE)), which is why the unclaimed BAR1/BAR3
+> mapped fine. `iomem=relaxed` on the kernel cmdline lifts it. Detail and sources:
+> `../upstream-movement-2026-11-23.md` (evening addendum). Section 2 stands as observed.
+
 Target: 0000:01:00.0 TU117 GTX 1650 (10de:1f82), kernel 6.12.108-1-MANJARO,
 nvidia 580.178.04 (GSP-RM running, GSP fw 580.178.04).
 
