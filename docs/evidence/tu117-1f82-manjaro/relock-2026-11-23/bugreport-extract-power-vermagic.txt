@@ -1,0 +1,46 @@
+NVIDIA Driver Type Detection:
+
+Detected driver type: Running RM Driver on GPUs
+Standard RM driver detected.
+
+____________________________________________
+
+*** /proc/driver/nvidia/gpus/0000:01:00.0/power
+*** ls: -r--r--r-- 1 root root 0 2026-11-23 16:35:48.642377402 +0100 /proc/driver/nvidia/gpus/0000:01:00.0/power
+Runtime D3 status:          ?  (driver never initialized - field unreadable)
+Video Memory:               ?
+
+GPU Hardware Support:
+ Video Memory Self Refresh: ?
+ Video Memory Off:          ?
+
+S0ix Power Management:
+ Platform Support:          Not Supported
+ Status:                    ?
+
+Notebook Dynamic Boost:     ?
+
+____________________________________________
+
+/sbin/modinfo nvidia | grep vermagic
+
+vermagic:       6.12.112-1-MANJARO SMP preempt mod_unload 
+
+/sbin/modinfo nvidia_drm | grep vermagic
+
+vermagic:       6.12.112-1-MANJARO SMP preempt mod_unload 
+
+/sbin/modinfo nvidia_modeset | grep vermagic
+
+vermagic:       6.12.112-1-MANJARO SMP preempt mod_unload 
+
+/sbin/modinfo nvidia_uvm | grep vermagic
+
+vermagic:       6.12.112-1-MANJARO SMP preempt mod_unload 
+
+/sbin/modinfo nvidia_peermem | grep vermagic
+
+vermagic:       6.12.112-1-MANJARO SMP preempt mod_unload 
+
+____________________________________________
+

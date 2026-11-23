@@ -1,0 +1,52 @@
+== diag with driver loaded (expected: blocked; kept for the record)
+===== diag-unlock inventory (read-only; no root, no BAR0) =====
+OS:      Manjaro Linux (kernel 6.12.112-1-MANJARO, x86_64)
+CPU:     Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+BOARD:   HP 843F (system: HP HP Slim Desktop 290-p0xxx)
+BIOS:    F.48 (07/27/2022)
+CHASSIS: desktop/tower (DMI chassis type 3)
+PLATFORM: Secure Boot = unknown
+NVIDIA driver: NVRM version: NVIDIA UNIX x86_64 Kernel Module  580.178.04  Tue Jul  7 12:38:21 UTC 2026
+GPU 1: unknown
+GPU 1 PCI: 10de:1f82 SUBSYS 871C1043 BDF 01:00.0
+GPU 1 family: tu10x (Turing) - IN-SCOPE (unlock transaction family)
+GPU 1 VBIOS: unknown (nvidia-smi unavailable)
+===== end inventory =====
+ADVISORY: none of the known pre-flight cautions apply
+0000:01:00.0:
+Traceback (most recent call last):
+  File "/home/ja/external/physicsdolphin/nv-uefi-unlocker/tools/diag-unlock.py", line 1154, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/ja/external/physicsdolphin/nv-uefi-unlocker/tools/diag-unlock.py", line 1123, in main
+    bar = Bar0(devpath)
+  File "/home/ja/external/physicsdolphin/nv-uefi-unlocker/tools/diag-unlock.py", line 668, in __init__
+    self.map = mmap.mmap(f.fileno(), 16 * 1024 * 1024)
+               ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 22] Invalid argument
+== unloading nvidia stack
+== diag with driver UNLOADED (the real readback channel)
+===== diag-unlock inventory (read-only; no root, no BAR0) =====
+OS:      Manjaro Linux (kernel 6.12.112-1-MANJARO, x86_64)
+CPU:     Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+BOARD:   HP 843F (system: HP HP Slim Desktop 290-p0xxx)
+BIOS:    F.48 (07/27/2022)
+CHASSIS: desktop/tower (DMI chassis type 3)
+PLATFORM: Secure Boot = unknown
+GPU 1: unknown
+GPU 1 PCI: 10de:1f82 SUBSYS 871C1043 BDF 01:00.0
+GPU 1 family: tu10x (Turing) - IN-SCOPE (unlock transaction family)
+GPU 1 VBIOS: unknown (nvidia-smi unavailable)
+===== end inventory =====
+ADVISORY: none of the known pre-flight cautions apply
+0000:01:00.0:
+Traceback (most recent call last):
+  File "/home/ja/external/physicsdolphin/nv-uefi-unlocker/tools/diag-unlock.py", line 1154, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/ja/external/physicsdolphin/nv-uefi-unlocker/tools/diag-unlock.py", line 1123, in main
+    bar = Bar0(devpath)
+  File "/home/ja/external/physicsdolphin/nv-uefi-unlocker/tools/diag-unlock.py", line 668, in __init__
+    self.map = mmap.mmap(f.fileno(), 16 * 1024 * 1024)
+               ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 22] Invalid argument

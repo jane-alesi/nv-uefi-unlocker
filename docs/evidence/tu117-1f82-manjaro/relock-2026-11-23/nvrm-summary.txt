@@ -1,0 +1,28 @@
+NVRM/driver lines, boot 2026-11-23 (relock arm), kernel start 16:26:56 CET - collapsed
+Source note: journald's first write in this boot is 16:28:00 (kernel clock 64 s) and it
+stamps the whole kernel backlog with that receive time, so journal "monotonic" times for
+kernel lines before 64 s are NOT event times. Use the printk timestamps in [] brackets.
+
+distinct shapes (dmesg-live.log, at capture 16:32):
+    684 NVRM: GPU 0000:01:00.0: rm_init_adapter failed, device minor number 0
+    684 NVRM: GPU 0000:01:00.0: RmInitAdapter failed! (0x62:0x40:2674)
+      1 NVRM: loading NVIDIA UNIX x86_64 Kernel Module  580.178.04  Tue Jul  7 12:38:21 UTC 2026   [    2.146016]
+      1 [drm] [nvidia-drm] [GPU ID 0x00000100] Loading driver                                        [    2.189701]
+      1 [drm:nv_drm_dev_load [nvidia_drm]] *ERROR* ... Failed to allocate NvKmsKapiDevice
+
+first failure   [   62.389791]  (live dmesg 16:29:55; rotated out of the later dmesg snapshots)
+next failures   [   65.589201] [   66.012027] ... then 0.1-3 s apart
+last failure    journal 16:39:33, total 786 (the tail is the nvidia-bug-report probes)
+
+timeline (wallclock): 16:26:56 kernel start | 16:26:58 module load |
+  16:27:58 first RmInitAdapter failure (first init attempt ~60 s) |
+  16:28:02 first nvidia-ctk run (nvidia-cdi-refresh.service) | 16:28:05 link up (5 s on a healthy boot)
+
+RM subsystem named before the first failure: none - the kernel console carries only the
+load banner and the tuple. The 0x62:0x40:2674 tuple is identical to the 2026-11-15
+gate-open run; the 2026-11-15 second shape (0x22:0x56:897) did not recur.
+
+init-attempt source: nvidia-cdi-refresh.service (path-triggered, not enabled at boot)
+re-fired on every failure; each start probes NVML = one RM init attempt. 127 restarts
+in ~6 min; path+service stopped at ~16:34 (host-side, reversible), after which the
+count is static.
