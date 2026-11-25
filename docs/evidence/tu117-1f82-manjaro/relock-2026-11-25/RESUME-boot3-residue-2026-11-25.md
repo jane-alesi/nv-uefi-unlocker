@@ -66,3 +66,22 @@ WPR2 lo/hi, MMU PLM, FEAT block. SS/PLM **writes** stay behind a separate per-ex
   removed from the cmdline at cleanup.
 - If the card does not come back from POST (it did after the D3cold event on 11-23): power
   off + WoL again; PSU-off needs hands.
+
+## OUTCOME (07:30-07:40 CET) - executed in full
+
+Wake 07:26:37, refused state confirmed (`0x62:0x40:2674`, 565+ attempts). Readback
+**worked first try** under `iomem=relaxed` - first in-OS BAR0 access on this box, with the
+driver bound. Results in `residue/residue-register-diff.md`:
+
+- FEAT fully live in-OS during the refusal loop (PLM open, SS `0x88888888/0x8`, READOUT 0)
+  -> **refuse-without-scrub, register-confirmed** (was inference on 11-23).
+- The failing driver built **its own WPR2 window** (`0x00ffee00/0x00fffc00`) after handoff
+  (handoff was `HI=0`) - it ran its own FWSEC, then returned RESET_REQUIRED.
+- Unchanged-from-factory: `BSI_SCRATCH15 0x201001bf`, `GFW_SCRATCH 0x3ff`, `GFW_PLM`,
+  GSP CPUCTL/EXCI, MMU/FBPA PLMs -> not candidates.
+- Residue present: SEC2 EXCI latch `0x00900100` (booter halt), loader canary (intact),
+  SEC2 CPUCTL stopped.
+- `nvidia-cdi-refresh` storm stopped twice (re-triggered once by the `agent-zero` container
+  restart -> `nvidia-modprobe`); probe count static after the second stop.
+
+Recovery plan: revert `iomem=relaxed` from the cmdline, power-off + owner WoL -> factory.
